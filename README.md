@@ -1,16 +1,12 @@
-# umujyanama
+# umujyanama (RCHW)
 
-A new Flutter project.
+Built in Flutter Framework
 
-## Getting Started
+Tools • Dart 2.19.6 • DevTools 2.20.1
 
-This project is a starting point for a Flutter application.
+Flutter 3.7.10 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot from 2023-04-11 16-46-47](https://user-images.githubusercontent.com/54468365/231201325-26044d94-f4aa-4a7c-b99c-97cf40524eae.png)
+![Screenshot from 2023-04-11 16-48-01](https://user-images.githubusercontent.com/54468365/231202802-5e51f7e9-1a34-464b-98f6-4ecdc2663848.png)
+![Screenshot from 2023-04-11 16-48-14](https://user-images.githubusercontent.com/54468365/231202858-daae512e-0165-4064-9bbd-0a005d8de8fd.png)
+![Screenshot from 2023-04-11 16-54-23](https://user-images.githubusercontent.com/54468365/231202892-af5868c1-7bf4-48a2-8363-0f8a98f1f77b.png)
