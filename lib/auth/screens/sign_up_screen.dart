@@ -148,7 +148,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       CustomTextField(
                         controller: _passwordController,
                         hintText: 'Password',
+                                            
                       ),
+           
                       const SizedBox(
                         height: 20,
                       ),

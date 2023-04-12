@@ -6,15 +6,21 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final int maxLength;
   final String? value;
+  final bool obsc;
+  final bool enableSug;
+  final bool autoCor;
 
-  const CustomTextField(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      this.maxLines,
-      this.maxLength=1,
-      this.value
-      });
+  const CustomTextField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    this.maxLines,
+    this.maxLength = 1,
+    this.value,
+    this.obsc = true,
+    this.enableSug = true,
+    this.autoCor = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +28,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
+       
         border: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black38),
         ),
@@ -29,6 +36,7 @@ class CustomTextField extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.black38),
           borderRadius: BorderRadius.circular(10.0),
         ),
+      
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -36,10 +44,7 @@ class CustomTextField extends StatelessWidget {
         }
         return null;
       },
-      maxLines:maxLines,
-      initialValue:value ,
-   
+      maxLines: maxLines,
     );
   }
 }
-

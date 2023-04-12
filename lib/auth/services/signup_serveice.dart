@@ -173,7 +173,39 @@ class SignUpService {
   }
 
 
+// change password
 
+
+  void submitPassword(
+      {required BuildContext context,
+      required String recentPassword,
+      required String newPassword
+      }) async {
+    try {
+       final pref = await SharedPreferences.getInstance();
+      final String? token = pref.getString('access-token');
+      http.Response response = await http.post(
+        Uri.parse('$uri/account/password/'),
+        body:jsonEncode({'recent_password': recentPassword,'new_password':newPassword}),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'JWT $token'
+        },
+      );
+
+      // ignore: use_build_context_synchronously
+      httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+      Navigator.pushNamedAndRemoveUntil(
+                context, HomeScreen.routeName, (route) => false);
+            showSnackbar(context, "Updated successful");
+          });
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+  }
 
 
 
