@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:provider/provider.dart';
 import 'package:umujyanama/common/widgets/custom_button.dart';
 import 'package:umujyanama/common/widgets/custom_textfield.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import 'package:umujyanama/auth/screens/sign_in_screen.dart';
 import 'package:umujyanama/constants/loader.dart';
-import 'package:umujyanama/constants/location_variables.dart';
 import 'package:umujyanama/auth/services/signup_serveice.dart';
 import 'package:umujyanama/models/village.dart';
-import 'package:umujyanama/provider/user_provider.dart';
 import 'package:umujyanama/services/village_service.dart';
 
 class SingUpScreen extends StatefulWidget {
@@ -25,6 +22,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
   final VillageService villageService = VillageService();
   List<Village>? villages;
   String? category;
+  bool loading = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,7 +31,6 @@ class _SingUpScreenState extends State<SingUpScreen> {
     fetchAllProduct();
   }
 
-  String district = 'Gasabo';
   final _signupFromKey = GlobalKey<FormState>();
   final SignUpService singUpService = SignUpService();
   final TextEditingController _fullNameController = TextEditingController();
@@ -53,8 +51,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
     _nationalIdentity.dispose();
   }
 
-  void signUpUser() {
-    singUpService.signUpUser(
+  void signUpUser() async {
+    bool retruned = await singUpService.signUpUser(
         context: context,
         email: _emailController.text,
         password: _passwordController.text,
@@ -62,8 +60,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
         phoneNumber: phoneNumberController.toString(),
         idNumber: _nationalIdentity.text,
         village: category.toString());
-
-  
+    setState(() {
+      loading = retruned;
+    });
   }
 
   fetchAllProduct() async {
@@ -99,7 +98,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 Form(
                   key: _signupFromKey,
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     color: GlobalVariables.backgroundColor,
                     child: Column(children: [
                       const SizedBox(
@@ -137,10 +136,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      CustomTextField(
+                      CustomTextFieldValidation(
                         controller: _nationalIdentity,
                         hintText: 'National Identity',
-                        maxLength: 16,
                       ),
                       const SizedBox(
                         height: 20,
@@ -148,9 +146,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       CustomTextField(
                         controller: _passwordController,
                         hintText: 'Password',
-                                            
+                        isPassword: true,
+                        autoCorrect: false,
                       ),
-           
                       const SizedBox(
                         height: 20,
                       ),
@@ -167,7 +165,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           icon: const Icon(Icons.keyboard_arrow_down),
                           items: villages!.map((item) {
                             return DropdownMenuItem(
-                                value: item.id, child: Text(item.name));
+                                value: item.id,
+                                child: Text(
+                                    "${item.name}-${item.sector}-${item.district}-${item.province}"));
                           }).toList(),
                           onChanged: (newVal) {
                             setState(() {
@@ -179,13 +179,17 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      CustomButton(
+                      loading
+                          ? CustomButton(text: ("loading..."), onTap: () {})
+                          : CustomButton(
                               text: "Create Account",
                               onTap: () {
                                 if (_signupFromKey.currentState!.validate() &&
                                     phoneNumberController != null) {
                                   signUpUser();
-                                
+                                  setState(() {
+                                    loading = true;
+                                  });
                                 }
                               }),
                       const SizedBox(

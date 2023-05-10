@@ -18,6 +18,7 @@ class _ContraceptionScreenState extends State<ContraceptionScreen> {
   final ContraceptionService contraceptionService = ContraceptionService();
   final FamilyService familyService = FamilyService();
   List<Family>? families;
+  bool loading = false;
 
   final _contraceptionForm = GlobalKey<FormState>();
   final TextEditingController _descriptionController = TextEditingController();
@@ -34,6 +35,7 @@ class _ContraceptionScreenState extends State<ContraceptionScreen> {
     families = await familyService.fetchFamily(context: context);
     setState(() {});
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -41,93 +43,97 @@ class _ContraceptionScreenState extends State<ContraceptionScreen> {
     _descriptionController.dispose();
   }
 
-
-  void submitMalnutrition() {
-    contraceptionService.submitContraception(
+  void submitMalnutrition() async {
+    bool dt = await contraceptionService.submitContraception(
         context: context,
         family: family.toString(),
         description: _descriptionController.text);
-    
+    loading = dt;
   }
 
   @override
   Widget build(BuildContext context) {
     return families == null
         ? const Loader()
-        :Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          const Center(
-            child: Text(
-              'Record Contraception',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Form(
-            key: _contraceptionForm,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              color: GlobalVariables.backgroundColor,
-              child: Column(children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: DropdownButton(
-                    underline: Container(), //empty line
-                    style: const TextStyle(
-                        fontSize: 18, color: Color.fromARGB(255, 11, 11, 11)),
-                    hint: const Text('Select a Family',
-                        style: TextStyle(fontSize: 15)),
-                    isExpanded: true,
-                    value: family,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: families!.map((item) {
-                      return DropdownMenuItem(
-                          value: item.id,
-                          child:  Text(
-                                "${item.fatherFullName} ${item.motherFullName}"));
-                      }).toList(),
-                    onChanged: (String? newVal) {
-                      setState(() {
-                        family = newVal!;
-                      });
-                    },
+        : Scaffold(
+            body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                const Center(
+                  child: Text(
+                    'Record Contraception',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                CustomTextField(
-                  controller: _descriptionController,
-                  hintText: "Description",
-                  maxLines: 10,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomButton(
-                    text: "Submit",
-                    onTap: () {
-                      if (_contraceptionForm.currentState!.validate()) {
-                        submitMalnutrition();
-                      }
-                    }),
-                const SizedBox(
-                  height: 20,
-                ),
-              ]),
+                Form(
+                  key: _contraceptionForm,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    color: GlobalVariables.backgroundColor,
+                    child: Column(children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: DropdownButton(
+                          underline: Container(), //empty line
+                          style: const TextStyle(
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 11, 11, 11)),
+                          hint: const Text('Select a Family',
+                              style: TextStyle(fontSize: 15)),
+                          isExpanded: true,
+                          value: family,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: families!.map((item) {
+                            return DropdownMenuItem(
+                                value: item.id,
+                                child: Text(
+                                    "${item.fatherFullName} and ${item.motherFullName}"));
+                          }).toList(),
+                          onChanged: (String? newVal) {
+                            setState(() {
+                              family = newVal!;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextFieldLong(
+                        controller: _descriptionController,
+                        hintText: "Description",
+                        maxLength: 10,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      loading
+                          ? CustomButton(text: "loading...", onTap: () {})
+                          : CustomButton(
+                              text: "Submit",
+                              onTap: () {
+                                if (_contraceptionForm.currentState!
+                                    .validate()) {
+                                  submitMalnutrition();
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                }
+                              }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ]),
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
-    ));
+          ));
   }
 }
-
-

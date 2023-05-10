@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import "package:moment_dart/moment_dart.dart";
 import 'package:umujyanama/constants/loader.dart';
-import 'package:umujyanama/home/screens/features_details/contraception_details.dart';
+import 'package:umujyanama/home/screens/features_details/patient_detail.dart';
 import 'package:umujyanama/home/screens/home_screen.dart';
-import 'package:umujyanama/home/services/contraception_service.dart';
-import 'package:umujyanama/models/contraception.dart';
+import 'package:umujyanama/home/services/patient_service.dart';
+import 'package:umujyanama/models/patient.dart';
 
-class ContraceptionList extends StatefulWidget {
-  static const routeName = '/contraception';
-  const ContraceptionList({super.key});
+class PatientList extends StatefulWidget {
+  static const routeName = '/patient-list/';
+  const PatientList({super.key});
 
   @override
-  State<ContraceptionList> createState() => _ContraceptionListState();
+  State<PatientList> createState() => _PatientListState();
 }
 
-class _ContraceptionListState extends State<ContraceptionList> {
-  final ContraceptionService contraceptionService = ContraceptionService();
-  List<Contraception>? contraceptions;
+class _PatientListState extends State<PatientList> {
+  final PatientService patientService = PatientService();
+  List<Patient>? patients;
 
   final MomentLocalization localization = MomentLocalizations.fr();
 
-  void navigateToContraceptionPage(BuildContext context, String id) {
-    Navigator.pushNamed(context, ContraceptionDetail.routeName, arguments: id);
+  void navigateToPatientPage(BuildContext context, String id) {
+    Navigator.pushNamed(context, PatientDetail.routeName, arguments: id);
   }
 
   @override
@@ -33,14 +33,13 @@ class _ContraceptionListState extends State<ContraceptionList> {
   }
 
   fetchContraception() async {
-    contraceptions =
-        await contraceptionService.fetchContraception(context: context);
+    patients = await patientService.fetchMalnutrition(context: context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return contraceptions == null
+    return patients == null
         ? const Loader()
         : Scaffold(
             appBar: PreferredSize(
@@ -60,7 +59,7 @@ class _ContraceptionListState extends State<ContraceptionList> {
                                   // margin: const EdgeInsets.only(top:10),
 
                                   child: const Text(
-                                    "Contraception List",
+                                    "Patient List",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -80,24 +79,23 @@ class _ContraceptionListState extends State<ContraceptionList> {
                           )
                         ]))),
             body: ListView.builder(
-                itemCount: contraceptions!.length,
+                itemCount: patients!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final contraceptionData = contraceptions![index];
+                  final patientsData = patients![index];
                   return Card(
                     color: Color.fromARGB(66, 201, 201, 201),
                     child: ListTile(
                       leading: const Icon(Icons.list),
                       trailing: Text(
                         Moment(
-                          contraceptionData.createdOn!.toMoment(),
+                          patientsData.createdOn!.toMoment(),
                         ).fromNow(),
                         style:
                             const TextStyle(color: Colors.green, fontSize: 15),
                       ),
-                      title: Text(
-                          "${contraceptionData.familyDetail} and ${contraceptionData.motherNames}",style: const TextStyle(fontWeight: FontWeight.bold),),
-                      onTap: () => navigateToContraceptionPage(
-                          context, contraceptionData.id.toString()),
+                      title: Text(patientsData.fullName,style: const TextStyle(fontWeight: FontWeight.bold),),
+                      onTap: () => navigateToPatientPage(
+                          context, patientsData.id.toString()),
                     ),
                   );
                 }),

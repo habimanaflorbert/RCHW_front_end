@@ -16,13 +16,13 @@ class MalnutritionScreen extends StatefulWidget {
 
 class _MalnutritionScreenState extends State<MalnutritionScreen> {
   final FamilyService familyService = FamilyService();
-  List<Family>? families;
-
   final _malnutritionForm = GlobalKey<FormState>();
   final MalnutritionService malnutritionService = MalnutritionService();
   final TextEditingController _fullNameController = TextEditingController();
-
+  List<Family>? families;
   String? family;
+  bool loading = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -36,14 +36,15 @@ class _MalnutritionScreenState extends State<MalnutritionScreen> {
     setState(() {});
   }
 
-  bool end = true;
-
-  void submitMalnutrition() {
-    malnutritionService.submitMalnutrition(
+  void submitMalnutrition() async {
+    bool returned = await malnutritionService.submitMalnutrition(
         context: context,
         family: family.toString(),
         childFullName: _fullNameController.text);
-    
+
+    setState(() {
+      loading = returned;
+    });
   }
 
   @override
@@ -108,13 +109,18 @@ class _MalnutritionScreenState extends State<MalnutritionScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomButton(
-                      text: "Submit",
-                      onTap: () {
-                        if (_malnutritionForm.currentState!.validate()) {
-                          submitMalnutrition();
-                        }
-                      }),
+                  loading
+                      ? CustomButton(text: "Loading...", onTap: () {})
+                      : CustomButton(
+                          text: "Submit",
+                          onTap: () {
+                            if (_malnutritionForm.currentState!.validate()) {
+                              submitMalnutrition();
+                              setState(() {
+                                loading = true;
+                              });
+                            }
+                          }),
                   const SizedBox(
                     height: 20,
                   ),

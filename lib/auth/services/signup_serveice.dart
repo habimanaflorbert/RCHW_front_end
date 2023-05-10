@@ -11,7 +11,7 @@ import 'package:umujyanama/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpService {
-  void signUpUser(
+  Future<bool> signUpUser(
       {required BuildContext context,
       required String fullName,
       required String email,
@@ -40,26 +40,25 @@ class SignUpService {
           response: response,
           context: context,
           onSuccess: () {
-         Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false);
             showSnackbar(context, "Updated successful");
           });
     } catch (e) {
       showSnackbar(context, e.toString());
     }
+    return false;
   }
-
 
 //edit full name
   void submitFullName(
-      {required BuildContext context,
-      required String fullName}) async {
+      {required BuildContext context, required String fullName}) async {
     try {
-       final pref = await SharedPreferences.getInstance();
+      final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
         Uri.parse('$uri/account/'),
-        body:jsonEncode({'full_name': fullName}),
+        body: jsonEncode({'full_name': fullName}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'JWT $token'
@@ -71,7 +70,7 @@ class SignUpService {
           response: response,
           context: context,
           onSuccess: () {
-              Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false);
             showSnackbar(context, "Updated successful");
           });
@@ -82,14 +81,13 @@ class SignUpService {
 
   //edit email
   void submitEmail(
-      {required BuildContext context,
-      required String email}) async {
+      {required BuildContext context, required String email}) async {
     try {
-       final pref = await SharedPreferences.getInstance();
+      final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
         Uri.parse('$uri/account/'),
-        body:jsonEncode({'email': email}),
+        body: jsonEncode({'email': email}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'JWT $token'
@@ -101,7 +99,7 @@ class SignUpService {
           response: response,
           context: context,
           onSuccess: () {
-               Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false);
             showSnackbar(context, "Updated successful");
           });
@@ -112,15 +110,13 @@ class SignUpService {
 
   // edit id card
 
-    void submitCard(
-      {required BuildContext context,
-      required String id}) async {
+  void submitCard({required BuildContext context, required String id}) async {
     try {
-       final pref = await SharedPreferences.getInstance();
+      final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
         Uri.parse('$uri/account/'),
-        body:jsonEncode({'identification_number': id}),
+        body: jsonEncode({'identification_number': id}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'JWT $token'
@@ -132,7 +128,7 @@ class SignUpService {
           response: response,
           context: context,
           onSuccess: () {
-      Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false);
             showSnackbar(context, "Updated successful");
           });
@@ -143,15 +139,14 @@ class SignUpService {
 
 //edit phone number
 
-    void submitPhoneNumber(
-      {required BuildContext context,
-      required String phoneNumber}) async {
+  void submitPhoneNumber(
+      {required BuildContext context, required String phoneNumber}) async {
     try {
-       final pref = await SharedPreferences.getInstance();
+      final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
         Uri.parse('$uri/account/'),
-        body:jsonEncode({'phone_number': phoneNumber}),
+        body: jsonEncode({'phone_number': phoneNumber}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'JWT $token'
@@ -163,7 +158,7 @@ class SignUpService {
           response: response,
           context: context,
           onSuccess: () {
-      Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false);
             showSnackbar(context, "Updated successful");
           });
@@ -172,21 +167,19 @@ class SignUpService {
     }
   }
 
-
 // change password
-
 
   void submitPassword(
       {required BuildContext context,
       required String recentPassword,
-      required String newPassword
-      }) async {
+      required String newPassword}) async {
     try {
-       final pref = await SharedPreferences.getInstance();
+      final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.post(
         Uri.parse('$uri/account/password/'),
-        body:jsonEncode({'recent_password': recentPassword,'new_password':newPassword}),
+        body: jsonEncode(
+            {'recent_password': recentPassword, 'new_password': newPassword}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'JWT $token'
@@ -198,7 +191,7 @@ class SignUpService {
           response: response,
           context: context,
           onSuccess: () {
-      Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false);
             showSnackbar(context, "Updated successful");
           });
@@ -206,11 +199,4 @@ class SignUpService {
       showSnackbar(context, e.toString());
     }
   }
-
-
-
-
-
-
-
 }

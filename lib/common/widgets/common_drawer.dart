@@ -3,6 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umujyanama/auth/screens/sign_in_screen.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import 'package:umujyanama/home/screens/contraception_list.dart';
+import 'package:umujyanama/home/screens/family_list.dart';
+import 'package:umujyanama/home/screens/malnutrition_list.dart';
+import 'package:umujyanama/home/screens/patient_list.dart';
 import 'package:umujyanama/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +29,7 @@ class CommonDrawer extends StatelessWidget {
       
           children: [
              Container(
-                height: 280.0,
+                height: 240.0,
                 decoration: BoxDecoration(
                   color: GlobalVariables.secondaryColor,
                   boxShadow: [
@@ -36,7 +39,7 @@ class CommonDrawer extends StatelessWidget {
                       BorderRadius.vertical(bottom: Radius.elliptical(20, 0)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Center(
                     child: Column(
                       children: [
@@ -48,7 +51,7 @@ class CommonDrawer extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 20),
+                      const  SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -56,29 +59,65 @@ class CommonDrawer extends StatelessWidget {
               ),
             
 
+//add family
+         ListTile(
+            leading:const Icon(
+              Icons.family_restroom,
+            ),
+            title: const Text('add and view Families'),
+            onTap: () {
+              Navigator.pushNamed(context, FamilyList.routeName);
+            },
+          ),
 
 
-//contraception section
 
+//patient section
                   const SizedBox(
                     height: 20,
                   ),
          ListTile(
-            leading: Icon(
-              Icons.train,
+            leading:const Icon(
+              Icons.sick,
+            ),
+            title: const Text('Recorded Patient'),
+            onTap: () {
+              Navigator.pushNamed(context, PatientList.routeName);
+            },
+          ),
+
+
+//malnutrition section
+                  const SizedBox(
+                    height: 20,
+                  ),
+         ListTile(
+            leading:const Icon(
+              Icons.no_meals,
+            ),
+            title: const Text('Recorded Malnutrition'),
+            onTap: () {
+              Navigator.pushNamed(context, MalnutritionList.routeName);
+            },
+          ),
+
+
+//contraception section
+                  const SizedBox(
+                    height: 20,
+                  ),
+         ListTile(
+            leading:const Icon(
+              Icons.medical_information,
             ),
             title: const Text('Recorded Contraception'),
             onTap: () {
-              Navigator.pop(context, ContraceptionList);
+              Navigator.pushNamed(context, ContraceptionList.routeName);
             },
           ),
 
 //log out section
-
-
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
+             Column(
                 children: [
                   const SizedBox(
                     height: 20,
@@ -108,8 +147,8 @@ class CommonDrawer extends StatelessWidget {
                   },
                               
 
-                    icon: Icon(Icons.logout),
-                    label: Text("Log out"),
+                    icon: Icon(Icons.logout,color: Colors.red[500],),
+                    label: Text("Log out",style: TextStyle(color: Colors.red[500]),),
                   ),
                   const Divider(
                     color: Colors.grey,
@@ -120,7 +159,7 @@ class CommonDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            
           
           ],
       

@@ -29,18 +29,14 @@ class Family {
       this.workerDetail});
   Map<String,dynamic> toMap() {
     return {
-      'id': id,
       'father_full_name': fatherFullName,
       'father_id_no': fatherIdNo,
       'mother_full_name': motherFullName,
       'mother_id_no': motherIdNo,
       'number_child': numberChild,
       'phone_number': phoneNumber,
-      'worker': worker,
-      'worker_detail': workerDetail,
-      'village_detail': villageDetail,
       'village': village,
-      'created_on': createdOn
+
     };
   }
 
@@ -54,7 +50,9 @@ class Family {
         numberChild: map['number_child'] ?? 0,
         phoneNumber: map['phone_number'] ?? '',
         village: map['village'] ?? '',
+        villageDetail: map['village_detail']['name']?? '',
         worker: map['worker'],
+        createdOn:DateTime.parse(map['created_on'])
      );
   }
   String toJson() => json.encode(toMap());

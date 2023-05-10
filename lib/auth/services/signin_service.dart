@@ -11,8 +11,7 @@ import 'package:umujyanama/home/screens/home_screen.dart';
 import 'package:umujyanama/provider/user_provider.dart';
 
 class SignInService {
- bool is_load=true;
-  SignInUser(
+  Future<bool> SignInUser(
       {required BuildContext context,
       required String username,
       required String password}) async {
@@ -44,6 +43,6 @@ class SignInService {
     } catch (e) {
       showSnackbar(context, e.toString());
     }
-  is_load=false;
+    return false;
   }
 }

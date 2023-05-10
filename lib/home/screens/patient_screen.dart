@@ -26,6 +26,7 @@ class _PatientScreenState extends State<PatientScreen> {
 
   String? phoneNumberController;
   DateTime? dateOfBirth;
+  bool loading = false;
 
   @override
   void dispose() {
@@ -36,8 +37,8 @@ class _PatientScreenState extends State<PatientScreen> {
     _sicknessController.dispose();
   }
 
-  void submitPatient() {
-    patientService.submitPatient(
+  void submitPatient() async {
+    bool dt = await patientService.submitPatient(
         context: context,
         fullName: _fullNameController.text,
         phoneNumber: phoneNumberController.toString(),
@@ -45,6 +46,9 @@ class _PatientScreenState extends State<PatientScreen> {
         insuranceNumber: _insuranceNumberController.text,
         sickness: _sicknessController.text,
         dateOfBirth: dateOfBirth!);
+    setState(() {
+      loading = dt;
+    });
   }
 
   @override
@@ -106,10 +110,9 @@ class _PatientScreenState extends State<PatientScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomTextField(
+                  CustomTextFieldValidation(
                     controller: _insuranceNumberController,
                     hintText: 'Insurance Number',
-                    maxLength: 16,
                   ),
                   const SizedBox(
                     height: 20,
@@ -134,7 +137,6 @@ class _PatientScreenState extends State<PatientScreen> {
                     validator: (e) =>
                         (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
                     onDateSelected: (DateTime value) {
-                      print(value);
                       setState(() {
                         dateOfBirth = value;
                       });
@@ -143,14 +145,18 @@ class _PatientScreenState extends State<PatientScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomButton(
-                      text: "Submit",
-                      onTap: () {
-                        if (_patientForm.currentState!.validate()) {
-                          submitPatient();
-                          // signUpUser();
-                        }
-                      }),
+                  loading
+                      ? CustomButton(text: "loading...", onTap: () {})
+                      : CustomButton(
+                          text: "Submit",
+                          onTap: () {
+                            if (_patientForm.currentState!.validate()) {
+                              submitPatient();
+                              setState(() {
+                                loading = true;
+                              });
+                            }
+                          }),
                   const SizedBox(
                     height: 20,
                   ),

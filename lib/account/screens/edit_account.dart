@@ -334,6 +334,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                               CustomTextField(
                                 controller: _firstNameController,
                                 hintText: 'Recent password',
+                                isPassword: true,
+                                autoCorrect: false,
                               ),
                               const SizedBox(
                                 height: 20,
@@ -341,6 +343,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                               CustomTextField(
                                 controller: _passwordController,
                                 hintText: "New password",
+                                isPassword: true,
+                                autoCorrect: false,
                               ),
                               const SizedBox(
                                 height: 20,
@@ -350,7 +354,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                   onTap: () {
                                     if (_signupFromKey.currentState!
                                         .validate()) {
-                                      updatePassword();
+                                      updateID();
                                     }
                                   }),
                             ]))),

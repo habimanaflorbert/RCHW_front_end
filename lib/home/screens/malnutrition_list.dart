@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import "package:moment_dart/moment_dart.dart";
 import 'package:umujyanama/constants/loader.dart';
-import 'package:umujyanama/home/screens/features_details/contraception_details.dart';
+import 'package:umujyanama/home/screens/features_details/malnutrirtion_detail.dart';
 import 'package:umujyanama/home/screens/home_screen.dart';
-import 'package:umujyanama/home/services/contraception_service.dart';
-import 'package:umujyanama/models/contraception.dart';
+import 'package:umujyanama/home/services/malnutrition_service.dart';
+import 'package:umujyanama/models/malnutrition.dart';
 
-class ContraceptionList extends StatefulWidget {
-  static const routeName = '/contraception';
-  const ContraceptionList({super.key});
+class MalnutritionList extends StatefulWidget {
+  static const routeName = '/malnutrition-list/';
+  const MalnutritionList({super.key});
 
   @override
-  State<ContraceptionList> createState() => _ContraceptionListState();
+  State<MalnutritionList> createState() => _MalnutritionListState();
 }
 
-class _ContraceptionListState extends State<ContraceptionList> {
-  final ContraceptionService contraceptionService = ContraceptionService();
-  List<Contraception>? contraceptions;
+class _MalnutritionListState extends State<MalnutritionList> {
+  final MalnutritionService malnutritionService = MalnutritionService();
+  List<Malnutrition>? malnutrition;
 
   final MomentLocalization localization = MomentLocalizations.fr();
 
-  void navigateToContraceptionPage(BuildContext context, String id) {
-    Navigator.pushNamed(context, ContraceptionDetail.routeName, arguments: id);
+  void navigateToMalnutritionPage(BuildContext context, String id) {
+    Navigator.pushNamed(context, MalnutritionDetail.routeName, arguments: id);
   }
 
   @override
@@ -33,21 +33,21 @@ class _ContraceptionListState extends State<ContraceptionList> {
   }
 
   fetchContraception() async {
-    contraceptions =
-        await contraceptionService.fetchContraception(context: context);
+    malnutrition =
+        await malnutritionService.fetchMalnutrition(context: context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return contraceptions == null
+    return malnutrition == null
         ? const Loader()
         : Scaffold(
             appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(60),
+                preferredSize:const Size.fromHeight(60),
                 child: AppBar(
                     flexibleSpace: Container(
-                      decoration: const BoxDecoration(
+                      decoration:const BoxDecoration(
                           gradient: GlobalVariables.appBarGradient),
                     ),
                     title: Row(
@@ -60,7 +60,7 @@ class _ContraceptionListState extends State<ContraceptionList> {
                                   // margin: const EdgeInsets.only(top:10),
 
                                   child: const Text(
-                                    "Contraception List",
+                                    "Malnutrition List",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -70,7 +70,7 @@ class _ContraceptionListState extends State<ContraceptionList> {
                             height: 42,
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: IconButton(
-                              icon: const Icon(Icons.house),
+                              icon:const Icon(Icons.house),
                               color: Colors.white,
                               onPressed: () {
                                 Navigator.pushNamedAndRemoveUntil(context,
@@ -80,24 +80,22 @@ class _ContraceptionListState extends State<ContraceptionList> {
                           )
                         ]))),
             body: ListView.builder(
-                itemCount: contraceptions!.length,
+                itemCount: malnutrition!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final contraceptionData = contraceptions![index];
+                  final malnutritionData = malnutrition![index];
                   return Card(
-                    color: Color.fromARGB(66, 201, 201, 201),
+                     color:const Color.fromARGB(66, 201, 201, 201),
                     child: ListTile(
                       leading: const Icon(Icons.list),
                       trailing: Text(
-                        Moment(
-                          contraceptionData.createdOn!.toMoment(),
-                        ).fromNow(),
-                        style:
-                            const TextStyle(color: Colors.green, fontSize: 15),
+                        Moment(malnutritionData.createdOn!.toMoment(),)
+                            .fromNow(),
+                        style: const TextStyle(color: Colors.green, fontSize: 15),
                       ),
                       title: Text(
-                          "${contraceptionData.familyDetail} and ${contraceptionData.motherNames}",style: const TextStyle(fontWeight: FontWeight.bold),),
-                      onTap: () => navigateToContraceptionPage(
-                          context, contraceptionData.id.toString()),
+                          "${malnutritionData.childFullName} (${malnutritionData.familyVillage})"),
+                      onTap: () => navigateToMalnutritionPage(
+                          context, malnutritionData.id.toString()),
                     ),
                   );
                 }),

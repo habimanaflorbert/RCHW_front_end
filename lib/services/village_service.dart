@@ -13,7 +13,6 @@ import 'package:umujyanama/provider/user_provider.dart';
 import '../constants/global_variables.dart';
 
 class VillageService {
-
   Future<List<Village>> fetchVillages({required BuildContext context}) async {
     List<Village> VillagesList = [];
     try {
@@ -25,7 +24,7 @@ class VillageService {
           response: res,
           context: context,
           onSuccess: () {
-            print(jsonDecode(res.body));
+       
             for (int i = 0; i < jsonDecode(res.body).length; i++) {
               VillagesList.add(
                 Village.fromJson(

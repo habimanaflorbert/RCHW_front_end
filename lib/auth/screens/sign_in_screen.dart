@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:umujyanama/auth/screens/sign_up_screen.dart';
 import 'package:umujyanama/auth/services/signin_service.dart';
 import 'package:umujyanama/common/widgets/custom_button.dart';
@@ -16,32 +17,27 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  bool name = false;
+  bool loading = false;
   final _signInFormKey = GlobalKey<FormState>();
   final SignInService signInService = SignInService();
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String? _usernameController;
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _usernameController.dispose();
     _passwordController.dispose();
   }
 
   signInUser() async {
-    signInService.SignInUser(
+    bool returned = await signInService.SignInUser(
         context: context,
-        username: _usernameController.text,
+        username: _usernameController.toString(),
         password: _passwordController.text);
-    name = await signInService.is_load;
-
-    if (name == false) {
-      setState(() {
-        name = false;
-      });
-    }
+    setState(() {
+      loading = returned;
+    });
   }
 
   @override
@@ -52,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Column(children: [
-        const SizedBox(
+          const SizedBox(
             height: 60,
           ),
           const Text(
@@ -69,15 +65,26 @@ class _SignInScreenState extends State<SignInScreen> {
           Form(
             key: _signInFormKey,
             child: Container(
-              padding:const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               color: GlobalVariables.backgroundColor,
               child: Column(children: [
                 const SizedBox(
                   height: 40,
                 ),
-                CustomTextField(
-                  controller: _usernameController,
-                  hintText: 'username',
+                IntlPhoneField(
+                  decoration: const InputDecoration(
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                  ),
+                  initialCountryCode: 'RW',
+                  onChanged: (phone) {
+                    // print(phone.completeNumber);
+                    setState(() {
+                      _usernameController = phone.completeNumber;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 40,
@@ -85,20 +92,24 @@ class _SignInScreenState extends State<SignInScreen> {
                 CustomTextField(
                   controller: _passwordController,
                   hintText: 'Password',
+                  isPassword: true,
+                  autoCorrect: false,
                 ),
                 const SizedBox(
                   height: 40,
                 ),
-                CustomButton(
-                    text: name ? "loading ... " : "Sign in",
-                    onTap: () {
-                      if (_signInFormKey.currentState!.validate()) {
-                        signInUser();
-                        setState(() {
-                          name = true;
-                        });
-                      }
-                    }),
+                loading
+                    ? CustomButton(text: "loading...", onTap: () {})
+                    : CustomButton(
+                        text: "Sign in",
+                        onTap: () {
+                          if (_signInFormKey.currentState!.validate()) {
+                            signInUser();
+                            setState(() {
+                              loading = true;
+                            });
+                          }
+                        }),
                 const SizedBox(
                   height: 40,
                 ),

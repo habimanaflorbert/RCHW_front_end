@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import "package:moment_dart/moment_dart.dart";
 import 'package:umujyanama/constants/loader.dart';
-import 'package:umujyanama/home/screens/features_details/contraception_details.dart';
-import 'package:umujyanama/home/screens/home_screen.dart';
-import 'package:umujyanama/home/services/contraception_service.dart';
-import 'package:umujyanama/models/contraception.dart';
+import 'package:umujyanama/home/screens/family_screen.dart';
+import 'package:umujyanama/home/screens/features_details/family_details.dart';
+import 'package:umujyanama/home/services/family_service.dart';
+import 'package:umujyanama/models/family.dart';
 
-class ContraceptionList extends StatefulWidget {
-  static const routeName = '/contraception';
-  const ContraceptionList({super.key});
+class FamilyList extends StatefulWidget {
+  static const routeName = '/families/';
+  const FamilyList({super.key});
 
   @override
-  State<ContraceptionList> createState() => _ContraceptionListState();
+  State<FamilyList> createState() => _FamilyListState();
 }
 
-class _ContraceptionListState extends State<ContraceptionList> {
-  final ContraceptionService contraceptionService = ContraceptionService();
-  List<Contraception>? contraceptions;
+class _FamilyListState extends State<FamilyList> {
+  final FamilyService familyService = FamilyService();
+  List<Family>? families;
 
   final MomentLocalization localization = MomentLocalizations.fr();
 
-  void navigateToContraceptionPage(BuildContext context, String id) {
-    Navigator.pushNamed(context, ContraceptionDetail.routeName, arguments: id);
+  void navigateToFamilyPage(BuildContext context, String id) {
+    Navigator.pushNamed(context, FamilyDetail.routeName, arguments: id);
   }
 
   @override
@@ -33,14 +33,13 @@ class _ContraceptionListState extends State<ContraceptionList> {
   }
 
   fetchContraception() async {
-    contraceptions =
-        await contraceptionService.fetchContraception(context: context);
+    families = await familyService.fetchFamily(context: context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return contraceptions == null
+    return families == null
         ? const Loader()
         : Scaffold(
             appBar: PreferredSize(
@@ -60,7 +59,7 @@ class _ContraceptionListState extends State<ContraceptionList> {
                                   // margin: const EdgeInsets.only(top:10),
 
                                   child: const Text(
-                                    "Contraception List",
+                                    "Families List",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -70,34 +69,35 @@ class _ContraceptionListState extends State<ContraceptionList> {
                             height: 42,
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: IconButton(
-                              icon: const Icon(Icons.house),
+                              icon: const Icon(Icons.add),
                               color: Colors.white,
                               onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    HomeScreen.routeName, (route) => false);
+                                Navigator.pushNamed(context,
+                                    FamilyScreen.routeName);
                               },
                             ),
                           )
                         ]))),
             body: ListView.builder(
-                itemCount: contraceptions!.length,
+                itemCount: families!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final contraceptionData = contraceptions![index];
+                  final familyData = families![index];
+                
                   return Card(
                     color: Color.fromARGB(66, 201, 201, 201),
                     child: ListTile(
-                      leading: const Icon(Icons.list),
+                      iconColor: GlobalVariables.selectedNavBarColor,
+                      selectedColor: GlobalVariables.backgroundColor,
+                      leading: const Icon(Icons.family_restroom_outlined),
                       trailing: Text(
-                        Moment(
-                          contraceptionData.createdOn!.toMoment(),
-                        ).fromNow(),
-                        style:
-                            const TextStyle(color: Colors.green, fontSize: 15),
-                      ),
+                          familyData.numberChild.toString(),
+                        style: const TextStyle(color: Colors.green, fontSize: 15,fontWeight: FontWeight.bold)
+                        ),
+                      
                       title: Text(
-                          "${contraceptionData.familyDetail} and ${contraceptionData.motherNames}",style: const TextStyle(fontWeight: FontWeight.bold),),
-                      onTap: () => navigateToContraceptionPage(
-                          context, contraceptionData.id.toString()),
+                          "${familyData.fatherFullName} and ${familyData.motherFullName} (${familyData.villageDetail}) ",style: const TextStyle(fontWeight: FontWeight.bold),),
+                      onTap: () => navigateToFamilyPage(
+                          context, familyData.id.toString()),
                     ),
                   );
                 }),
