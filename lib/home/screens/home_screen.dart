@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:umujyanama/account/screens/edit_account.dart';
+import 'package:umujyanama/common/widgets/common_app_bar.dart';
 import 'package:umujyanama/common/widgets/common_drawer.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import 'package:umujyanama/constants/loader.dart';
@@ -57,40 +58,38 @@ class _HomeScreenState extends State<HomeScreen> {
         : Scaffold(
             drawer: const CommonDrawer(),
             appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
-              child: AppBar(
-                flexibleSpace: Container(
-                  decoration:
-                      BoxDecoration(gradient: GlobalVariables.appBarGradient),
-                ),
-                title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          child: Container(
-                              height: 42,
-                              alignment: Alignment.center,
-                              // margin: const EdgeInsets.only(top:10),
+                preferredSize: Size.fromHeight(60),
+                child: AppBar(
+                    flexibleSpace: Container(
+                      decoration: BoxDecoration(
+                          gradient: GlobalVariables.appBarGradient),
+                    ),
+                    title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: Container(
+                                  height: 42,
+                                  alignment: Alignment.center,
+                                  // margin: const EdgeInsets.only(top:10),
 
-                              child: const Text(
-                                "RCHW",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))),
-                      // Container(
-                      //   color: Colors.transparent,
-                      //   height: 42,
-                      //   margin: const EdgeInsets.symmetric(horizontal: 10),
-                      //   child: const Icon(
-                      //     Icons.search_outlined,
-                      //     color: Colors.white,
-                      //     size: 25,
-                      //   ),
-                      // )
-                    ]),
-              ),
-            ),
+                                  child: const Text(
+                                    "RCHW",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                          // Container(
+                          //   color: Colors.transparent,
+                          //   height: 42,
+                          //   margin: const EdgeInsets.symmetric(horizontal: 10),
+                          //   child: const Icon(
+                          //     Icons.search_outlined,
+                          //     color: Colors.white,
+                          //     size: 25,
+                          //   ),
+                          // )
+                        ]))),
             body: pages[_page],
             bottomNavigationBar: BottomNavigationBar(
                 onTap: updatePage,
@@ -162,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: _page == 4
                                         ? GlobalVariables.selectedNavBarColor
                                         : GlobalVariables.backgroundColor))),
-                        child: const Icon(Icons.person),
+                        child: const Icon(Icons.settings),
                       ),
                       label: ''),
                 ]),

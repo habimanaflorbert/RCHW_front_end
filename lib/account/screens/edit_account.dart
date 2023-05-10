@@ -20,7 +20,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   final SignUpService singUpService = SignUpService();
   String? phoneNumberController;
   final TextEditingController _firstNameController = TextEditingController();
-
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -31,30 +31,28 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
   void updateFullName() {
     singUpService.submitFullName(
-        context: context,
-        fullName: _firstNameController.text
-        );
+        context: context, fullName: _firstNameController.text);
   }
 
-    void updateEmail() {
+  void updateEmail() {
     singUpService.submitEmail(
-        context: context,
-        email: _firstNameController.text
-        );
+        context: context, email: _firstNameController.text);
   }
 
-    void updateID() {
-    singUpService.submitCard(
-        context: context,
-        id: _firstNameController.text
-        );
+  void updateID() {
+    singUpService.submitCard(context: context, id: _firstNameController.text);
   }
 
-      void updatePhone() {
+  void updatePhone() {
     singUpService.submitPhoneNumber(
+        context: context, phoneNumber: _firstNameController.text);
+  }
+
+  void updatePassword() {
+    singUpService.submitPassword(
         context: context,
-        phoneNumber: _firstNameController.text
-        );
+        recentPassword: _firstNameController.text,
+        newPassword: _passwordController.text);
   }
 
   @override
@@ -92,45 +90,38 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                         
                             scrollable: true,
                             content: Form(
-                  key: _signupFromKey,
-                  child: Container(
-                  
-                    color: GlobalVariables.backgroundColor,
-                    child: Column(children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CustomTextField(
-                        controller: _firstNameController,
-                        hintText: 'Full Name',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                         CustomButton(
-                              text: "Update",
-                              onTap: () {
-                                if (_signupFromKey.currentState!.validate()) {
-                                  updateFullName();
-                                
-                                }
-                              }),
-                    
-            ]
-          ))),     
-                           
+                                key: _signupFromKey,
+                                child: Container(
+                                    color: GlobalVariables.backgroundColor,
+                                    child: Column(children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomTextField(
+                                        controller: _firstNameController,
+                                        hintText: 'Full Name',
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomButton(
+                                          text: "Update",
+                                          onTap: () {
+                                            if (_signupFromKey.currentState!
+                                                .validate()) {
+                                              updateFullName();
+                                            }
+                                          }),
+                                    ]))),
                           );
                         });
                   },
                   icon: const Icon(
                     Icons.edit,
                     color: GlobalVariables.secondaryColor,
-                  )
-                  )
+                  ))
             ],
           ),
         ),
@@ -145,51 +136,44 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               )),
-           IconButton(
+              IconButton(
                   onPressed: () {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                         
                             scrollable: true,
                             content: Form(
-                  key: _signupFromKey,
-                  child: Container(
-                  
-                    color: GlobalVariables.backgroundColor,
-                    child: Column(children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CustomTextField(
-                        controller: _firstNameController,
-                        hintText: 'Email',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                         CustomButton(
-                              text: "Update",
-                              onTap: () {
-                                if (_signupFromKey.currentState!.validate()) {
-                                  updateEmail();
-                                
-                                }
-                              }),
-                    
-            ]
-          ))),     
-                           
+                                key: _signupFromKey,
+                                child: Container(
+                                    color: GlobalVariables.backgroundColor,
+                                    child: Column(children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomTextField(
+                                        controller: _firstNameController,
+                                        hintText: 'Email',
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomButton(
+                                          text: "Update",
+                                          onTap: () {
+                                            if (_signupFromKey.currentState!
+                                                .validate()) {
+                                              updateEmail();
+                                            }
+                                          }),
+                                    ]))),
                           );
                         });
                   },
                   icon: const Icon(
                     Icons.edit,
                     color: GlobalVariables.secondaryColor,
-                  )
-                  )
+                  ))
             ],
           ),
         ),
@@ -204,51 +188,44 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               )),
-             IconButton(
+              IconButton(
                   onPressed: () {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                         
                             scrollable: true,
                             content: Form(
-                  key: _signupFromKey,
-                  child: Container(
-                  
-                    color: GlobalVariables.backgroundColor,
-                    child: Column(children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CustomTextField(
-                        controller: _firstNameController,
-                        hintText: 'National Identity',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                         CustomButton(
-                              text: "Update",
-                              onTap: () {
-                                if (_signupFromKey.currentState!.validate()) {
-                                  updateID();
-                                
-                                }
-                              }),
-                    
-            ]
-          ))),     
-                           
+                                key: _signupFromKey,
+                                child: Container(
+                                    color: GlobalVariables.backgroundColor,
+                                    child: Column(children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomTextField(
+                                        controller: _firstNameController,
+                                        hintText: 'National Identity',
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomButton(
+                                          text: "Update",
+                                          onTap: () {
+                                            if (_signupFromKey.currentState!
+                                                .validate()) {
+                                              updateID();
+                                            }
+                                          }),
+                                    ]))),
                           );
                         });
                   },
                   icon: const Icon(
                     Icons.edit,
                     color: GlobalVariables.secondaryColor,
-                  )
-                  )
+                  ))
             ],
           ),
         ),
@@ -263,62 +240,56 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               )),
-            IconButton(
+              IconButton(
                   onPressed: () {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                         
                             scrollable: true,
                             content: Form(
-                  key: _signupFromKey,
-                  child: Container(
-                  
-                    color: GlobalVariables.backgroundColor,
-                    child: Column(children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                        IntlPhoneField(
-                        decoration: const InputDecoration(
-                          labelText: 'Phone Number',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
-                        ),
-                        initialCountryCode: 'RW',
-                        onChanged: (phone) {
-                          // print(phone.completeNumber);
-                          setState(() {
-                            phoneNumberController = phone.completeNumber;
-                          });
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                         CustomButton(
-                              text: "Update",
-                              onTap: () {
-                                if (_signupFromKey.currentState!.validate()) {
-                                  updatePhone();
-                                
-                                }
-                              }),
-                    
-            ]
-          ))),     
-                           
+                                key: _signupFromKey,
+                                child: Container(
+                                    color: GlobalVariables.backgroundColor,
+                                    child: Column(children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      IntlPhoneField(
+                                        decoration: const InputDecoration(
+                                          labelText: 'Phone Number',
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(),
+                                          ),
+                                        ),
+                                        initialCountryCode: 'RW',
+                                        onChanged: (phone) {
+                                          // print(phone.completeNumber);
+                                          setState(() {
+                                            phoneNumberController =
+                                                phone.completeNumber;
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      CustomButton(
+                                          text: "Update",
+                                          onTap: () {
+                                            if (_signupFromKey.currentState!
+                                                .validate()) {
+                                              updatePhone();
+                                            }
+                                          }),
+                                    ]))),
                           );
                         });
                   },
                   icon: const Icon(
                     Icons.edit,
                     color: GlobalVariables.secondaryColor,
-                  )
-                  )
+                  ))
             ],
           ),
         ),
@@ -335,6 +306,61 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               )),
             ],
           ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        InkWell(
+          child: const Text("Change password",
+              style: TextStyle(
+                  letterSpacing: 1.0,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: GlobalVariables.headText)),
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    scrollable: true,
+                    content: Form(
+                        key: _signupFromKey,
+                        child: Container(
+                            color: GlobalVariables.backgroundColor,
+                            child: Column(children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                controller: _firstNameController,
+                                hintText: 'Recent password',
+                                isPassword: true,
+                                autoCorrect: false,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                controller: _passwordController,
+                                hintText: "New password",
+                                isPassword: true,
+                                autoCorrect: false,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomButton(
+                                  text: "Update",
+                                  onTap: () {
+                                    if (_signupFromKey.currentState!
+                                        .validate()) {
+                                      updateID();
+                                    }
+                                  }),
+                            ]))),
+                  );
+                });
+          },
         ),
       ],
     )));
