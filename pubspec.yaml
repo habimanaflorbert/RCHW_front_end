@@ -42,6 +42,8 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.0.17
   moment_dart: ^0.17.4
+  syncfusion_flutter_pdfviewer: ^20.4.54
+
 
 dev_dependencies:
   flutter_test:

@@ -158,7 +158,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           underline: Container(), //empty line
                           style: const TextStyle(
                               fontSize: 18,
-                              color: Color.fromARGB(255, 11, 11, 11)),
+                              color:const Color.fromARGB(255, 11, 11, 11)),
                           isExpanded: true,
                           hint: const Text("Select village"),
                           value: category,

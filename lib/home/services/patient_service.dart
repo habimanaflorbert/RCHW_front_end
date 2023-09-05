@@ -18,18 +18,23 @@ class PatientService {
       required String insuranceNumber,
       required String sickness,
       required String phoneNumber,
+      required String symptoms,
+      required String causes,
       required DateTime dateOfBirth}) async {
     try {
       final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       Patient patient = Patient(
           fullName: fullName,
+          symptoms: symptoms,
+          causes: causes,
           insuranceName: insuranceName,
           insuranceNumber: insuranceNumber,
           phoneNumber: phoneNumber,
           sickness: sickness,
           dateOfBirth:
               "${dateOfBirth.year}-${dateOfBirth.month}-${dateOfBirth.day}");
+      
       http.Response resp = await http.post(
         Uri.parse('$uri/api/patient/'),
         body: patient.toJson(),
@@ -47,6 +52,7 @@ class PatientService {
             showSnackbar(context, "Saved successful");
           });
     } catch (e) {
+      print(e);
       showSnackbar(context, e.toString());
     }
     return false;
@@ -108,6 +114,7 @@ class PatientService {
             ));
           });
     } catch (e) {
+      print(e);
       showSnackbar(context, e.toString());
     }
     return patientInfo;

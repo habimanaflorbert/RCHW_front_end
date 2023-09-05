@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:umujyanama/auth/screens/sign_in_screen.dart';
 import 'package:umujyanama/constants/error_handling.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import 'package:umujyanama/constants/utils.dart';
@@ -28,7 +27,7 @@ class SignUpService {
           password: password,
           village: village);
       http.Response response = await http.post(
-        Uri.parse('$uri/account/'),
+        Uri.parse('$uri/account/account/'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
