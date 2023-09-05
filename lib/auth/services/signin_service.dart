@@ -17,7 +17,7 @@ class SignInService {
       required String password}) async {
     try {
       http.Response res = await http.post(
-        Uri.parse('$uri/login/'),
+        Uri.parse('$uri/account/login/'),
         body: jsonEncode({'username': username, 'password': password}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'

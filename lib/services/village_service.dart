@@ -17,7 +17,7 @@ class VillageService {
     List<Village> VillagesList = [];
     try {
       http.Response res =
-          await http.get(Uri.parse("$uri/villages/"), headers: <String, String>{
+          await http.get(Uri.parse("$uri/account/villages/"), headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       });
       httpErrorHandle(

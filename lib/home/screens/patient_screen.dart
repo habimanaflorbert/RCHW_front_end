@@ -19,14 +19,22 @@ class _PatientScreenState extends State<PatientScreen> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _insuranceNameController =
       TextEditingController();
+  final TextEditingController _symptomsController = TextEditingController();
+  final TextEditingController _causesController = TextEditingController();
   final TextEditingController _insuranceNumberController =
       TextEditingController();
-  final TextEditingController _sicknessController = TextEditingController();
+
   final TextEditingController _nationalIdentity = TextEditingController();
 
   String? phoneNumberController;
+  String? dease;
   DateTime? dateOfBirth;
   bool loading = false;
+  List<Map> deases = [
+    {"keyName": "CHILDILLNESS", "name": "Childhood illnesses"},
+    {"keyName": "MALARIA", "name": "Malaria"},
+    {"keyName": "TUBERCULOSIS", "name": "Tuberculosis"}
+  ];
 
   @override
   void dispose() {
@@ -34,7 +42,7 @@ class _PatientScreenState extends State<PatientScreen> {
     super.dispose();
     _fullNameController.dispose();
     _insuranceNameController.dispose();
-    _sicknessController.dispose();
+    dease;
   }
 
   void submitPatient() async {
@@ -44,7 +52,9 @@ class _PatientScreenState extends State<PatientScreen> {
         phoneNumber: phoneNumberController.toString(),
         insuranceName: _insuranceNameController.text,
         insuranceNumber: _insuranceNumberController.text,
-        sickness: _sicknessController.text,
+        sickness: dease.toString(),
+        symptoms: _symptomsController.text,
+        causes: _causesController.text,
         dateOfBirth: dateOfBirth!);
     setState(() {
       loading = dt;
@@ -117,9 +127,44 @@ class _PatientScreenState extends State<PatientScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomTextField(
-                    controller: _sicknessController,
-                    hintText: 'Sickness',
+                  CustomTextFieldLong(
+                    controller: _symptomsController,
+                    hintText: "Symptoms",
+                    maxLength: 10,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldLong(
+                    controller: _causesController,
+                    hintText: "Causes ",
+                    maxLength: 10,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: DropdownButton(
+                      underline: Container(), //empty line
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: const Color.fromARGB(255, 11, 11, 11)),
+                      isExpanded: true,
+                      hint: const Text("Select Paldusim"),
+                      value: dease,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: deases.map((item) {
+                        return DropdownMenuItem(
+                            value: item['keyName'],
+                            child: Text("${item['name']}"));
+                      }).toList(),
+                      onChanged: (newVal) {
+                        setState(() {
+                          dease = newVal.toString();
+                        });
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -150,7 +195,7 @@ class _PatientScreenState extends State<PatientScreen> {
                       : CustomButton(
                           text: "Submit",
                           onTap: () {
-                            if (_patientForm.currentState!.validate()) {
+                            if (_patientForm.currentState!.validate() && dease!=null) {
                               submitPatient();
                               setState(() {
                                 loading = true;

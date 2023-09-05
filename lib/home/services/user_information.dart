@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +15,7 @@ class UserInfoService {
     User? userInfo;
     final String? token = pref.getString('access-token');
     try {
-      http.Response res = await http.get(Uri.parse("$uri/account/user_me/"),
+      http.Response res = await http.get(Uri.parse("$uri/account/account/user_me/"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'JWT $token'

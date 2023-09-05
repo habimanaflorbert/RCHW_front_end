@@ -11,9 +11,13 @@ class Patient {
   final String dateOfBirth;
   final String phoneNumber;
   final DateTime? createdOn;
+  final String symptoms;
+  final String causes;
 
   Patient(
       {this.id,
+      required this.causes,
+      required this.symptoms,
       required this.fullName,
       required this.insuranceName,
       required this.insuranceNumber,
@@ -31,12 +35,13 @@ class Patient {
       'insurance_number': insuranceNumber,
       'sickness': sickness,
       'phone': phoneNumber,
+      'symptoms':symptoms,
+      'causes':causes,
       'date_of_birth': dateOfBirth,
     };
   }
 
   factory Patient.fromMap(Map<String, dynamic> map) {
-
     return Patient(
       id: map['id'] ?? '',
       fullName: map['full_name'] ?? '',
@@ -47,6 +52,8 @@ class Patient {
       phoneNumber: map['phone'] ?? '',
       villageDetail: map['villageDetail'] ?? '',
       dateOfBirth: map['date_of_birth'] ?? '',
+      symptoms: map['symptoms']?? '',
+      causes: map['causes']?? '',
       createdOn: DateTime.parse(map['created_on']),
     );
   }
