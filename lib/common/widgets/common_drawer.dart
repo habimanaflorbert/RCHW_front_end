@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umujyanama/auth/screens/sign_in_screen.dart';
 import 'package:umujyanama/constants/global_variables.dart';
+import 'package:umujyanama/home/screens/children_screen.dart';
 import 'package:umujyanama/home/screens/contraception_list.dart';
 import 'package:umujyanama/home/screens/document.dart';
 import 'package:umujyanama/home/screens/family_list.dart';
 import 'package:umujyanama/home/screens/home_screen.dart';
 import 'package:umujyanama/home/screens/malnutrition_list.dart';
 import 'package:umujyanama/home/screens/patient_list.dart';
+import 'package:umujyanama/home/screens/pregnancy.dart';
 import 'package:umujyanama/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -124,6 +126,31 @@ class CommonDrawer extends StatelessWidget {
 
               
             ),
+
+        ListTile(
+              leading: const Icon(
+                Icons.pregnant_woman,
+              ),
+              title: const Text('Pregnancy'),
+              onTap: () {
+                Navigator.pushNamed(context, PregnancyScreen.routeName);
+              },
+
+              
+            ),
+
+                    ListTile(
+              leading: const Icon(
+                Icons.child_care,
+              ),
+              title: const Text('Children'),
+              onTap: () {
+                Navigator.pushNamed(context, ChildrenScreen.routeName);
+              },
+
+              
+            ),
+            
 
 //log out section
             Column(

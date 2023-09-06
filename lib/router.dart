@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umujyanama/auth/screens/sign_in_screen.dart';
 import 'package:umujyanama/auth/screens/sign_up_screen.dart';
+import 'package:umujyanama/home/screens/children_screen.dart';
 import 'package:umujyanama/home/screens/contraception_list.dart';
 import 'package:umujyanama/home/screens/document.dart';
 import 'package:umujyanama/home/screens/family_list.dart';
@@ -13,6 +14,7 @@ import 'package:umujyanama/home/screens/features_details/patient_detail.dart';
 import 'package:umujyanama/home/screens/home_screen.dart';
 import 'package:umujyanama/home/screens/malnutrition_list.dart';
 import 'package:umujyanama/home/screens/patient_list.dart';
+import 'package:umujyanama/home/screens/pregnancy.dart';
 import 'package:umujyanama/welcome/screens/page_not_found.dart';
 import 'package:umujyanama/welcome/screens/welcome_screen.dart';
 
@@ -75,6 +77,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case DocumentScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const DocumentScreen());
+    
+      case PregnancyScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const PregnancyScreen());
+
+      case ChildrenScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ChildrenScreen());
 
     case DocumentDetail.routeName:
       var url = routeSettings.arguments as String;
