@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umujyanama/auth/screens/sign_in_screen.dart';
 import 'package:umujyanama/auth/screens/sign_up_screen.dart';
+import 'package:umujyanama/home/screens/booked_screen.dart';
 import 'package:umujyanama/home/screens/children_screen.dart';
 import 'package:umujyanama/home/screens/contraception_list.dart';
 import 'package:umujyanama/home/screens/document.dart';
@@ -10,6 +11,7 @@ import 'package:umujyanama/home/screens/features_details/contraception_details.d
 import 'package:umujyanama/home/screens/features_details/document_details.dart';
 import 'package:umujyanama/home/screens/features_details/family_details.dart';
 import 'package:umujyanama/home/screens/features_details/malnutrirtion_detail.dart';
+import 'package:umujyanama/home/screens/features_details/my_booked_screen.dart';
 import 'package:umujyanama/home/screens/features_details/patient_detail.dart';
 import 'package:umujyanama/home/screens/home_screen.dart';
 import 'package:umujyanama/home/screens/malnutrition_list.dart';
@@ -17,6 +19,7 @@ import 'package:umujyanama/home/screens/patient_list.dart';
 import 'package:umujyanama/home/screens/pregnancy.dart';
 import 'package:umujyanama/welcome/screens/page_not_found.dart';
 import 'package:umujyanama/welcome/screens/welcome_screen.dart';
+import 'package:umujyanama/home/screens/features_details/booked_details.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -68,29 +71,42 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       var id = routeSettings.arguments as String;
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => PatientDetail(id: id));
-   
+
     case MalnutritionDetail.routeName:
       var id = routeSettings.arguments as String;
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => MalnutritionDetail(id: id));
-    
+
     case DocumentScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const DocumentScreen());
-    
-      case PregnancyScreen.routeName:
+
+    case PregnancyScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const PregnancyScreen());
 
-      case ChildrenScreen.routeName:
+    case ChildrenScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ChildrenScreen());
 
     case DocumentDetail.routeName:
       var url = routeSettings.arguments as String;
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => DocumentDetail(documentUrl: url));
+          settings: routeSettings,
+          builder: (_) => DocumentDetail(documentUrl: url));
     
+    case MyBookedVillageScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const MyBookedVillageScreen());
+
+    case BookedVillageScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const BookedVillageScreen());
+
+    case BookedDetailScreen.routeName:
+      var id = routeSettings.arguments as String;
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => BookedDetailScreen(id: id));
 
     default:
       return MaterialPageRoute(

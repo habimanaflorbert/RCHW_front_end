@@ -32,7 +32,8 @@ class DashboardScreen extends StatelessWidget {
                   user.fullName,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20),
-                ))
+                )),
+                
               ],
             ),
             const SizedBox(
@@ -65,6 +66,7 @@ class DashboardScreen extends StatelessWidget {
                             fontSize: 30,
                             color: Colors.white),
                       ),
+                     
                     ],
                   ),
                 )),

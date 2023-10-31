@@ -81,7 +81,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                           )
                         ]))),
             body: ListView.builder(
-                itemCount: 2,
+                itemCount: getDocument!.length,
                 itemBuilder: (BuildContext context, int index) {
                   final contraceptionData = getDocument![index];
                   return Card(

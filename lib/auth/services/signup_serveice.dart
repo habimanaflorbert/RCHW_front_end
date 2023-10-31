@@ -56,7 +56,7 @@ class SignUpService {
       final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
-        Uri.parse('$uri/account/'),
+        Uri.parse('$uri/account/account/'),
         body: jsonEncode({'full_name': fullName}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -85,7 +85,7 @@ class SignUpService {
       final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
-        Uri.parse('$uri/account/'),
+        Uri.parse('$uri/account/account/'),
         body: jsonEncode({'email': email}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -114,7 +114,7 @@ class SignUpService {
       final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
-        Uri.parse('$uri/account/'),
+        Uri.parse('$uri/account/account/'),
         body: jsonEncode({'identification_number': id}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -144,7 +144,7 @@ class SignUpService {
       final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.patch(
-        Uri.parse('$uri/account/'),
+        Uri.parse('$uri/account/account/'),
         body: jsonEncode({'phone_number': phoneNumber}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -176,7 +176,7 @@ class SignUpService {
       final pref = await SharedPreferences.getInstance();
       final String? token = pref.getString('access-token');
       http.Response response = await http.post(
-        Uri.parse('$uri/account/password/'),
+        Uri.parse('$uri/account/account/password/'),
         body: jsonEncode(
             {'recent_password': recentPassword, 'new_password': newPassword}),
         headers: <String, String>{
