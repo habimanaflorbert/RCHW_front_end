@@ -83,9 +83,9 @@ class _PatientListState extends State<PatientList> {
                 itemBuilder: (BuildContext context, int index) {
                   final patientsData = patients![index];
                   return Card(
-                    color: Color.fromARGB(66, 201, 201, 201),
+                    color:const Color.fromARGB(66, 201, 201, 201),
                     child: ListTile(
-                      leading: const Icon(Icons.list),
+                    
                       trailing: Text(
                         Moment(
                           patientsData.createdOn!.toMoment(),

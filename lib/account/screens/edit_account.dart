@@ -333,7 +333,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                               ),
                               CustomTextField(
                                 controller: _firstNameController,
-                                hintText: 'Recent password',
+                                hintText: 'Current password',
                                 isPassword: true,
                                 autoCorrect: false,
                               ),
@@ -350,11 +350,11 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                 height: 20,
                               ),
                               CustomButton(
-                                  text: "Update",
+                                  text: "Update password",
                                   onTap: () {
                                     if (_signupFromKey.currentState!
                                         .validate()) {
-                                      updateID();
+                                      updatePassword();
                                     }
                                   }),
                             ]))),

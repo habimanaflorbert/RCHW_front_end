@@ -4,6 +4,7 @@ import 'package:umujyanama/common/widgets/common_app_bar.dart';
 import 'package:umujyanama/common/widgets/common_drawer.dart';
 import 'package:umujyanama/constants/global_variables.dart';
 import 'package:umujyanama/constants/loader.dart';
+import 'package:umujyanama/home/screens/booked_screen.dart';
 import 'package:umujyanama/home/screens/contraception_screen.dart';
 import 'package:umujyanama/home/screens/dashoard_screen.dart';
 import 'package:umujyanama/home/screens/malnutrition_screen.dart';
@@ -79,16 +80,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ))),
-                          // Container(
-                          //   color: Colors.transparent,
-                          //   height: 42,
-                          //   margin: const EdgeInsets.symmetric(horizontal: 10),
-                          //   child: const Icon(
-                          //     Icons.search_outlined,
-                          //     color: Colors.white,
-                          //     size: 25,
-                          //   ),
-                          // )
+                           Container(
+                            color: Colors.transparent,
+                            height: 42,
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            child: IconButton(
+                              icon: const Icon(Icons.book),
+                              color: Colors.white,
+                              onPressed: () {
+                          Navigator.pushNamed(context, BookedVillageScreen.routeName);                              
+                              },
+                            ),
+                          )
                         ]))),
             body: pages[_page],
             bottomNavigationBar: BottomNavigationBar(

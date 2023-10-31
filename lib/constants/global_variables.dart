@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String uri = 'https://6a07-196-12-131-142.ngrok-free.app';
+String uri = 'https://f505-2c0f-eb68-60a-3000-6049-4bd2-9bec-de9a.ngrok-free.app';
 
 class GlobalVariables {
 // users types

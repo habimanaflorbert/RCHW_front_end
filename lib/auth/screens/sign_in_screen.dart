@@ -130,29 +130,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "You don't have account ?  ",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        child: const Text("Create account ",
-                            style: TextStyle(
-                                letterSpacing: 1.0,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: GlobalVariables.headText)),
-                        onTap: () {
-                          Navigator.pushNamed(context, SingUpScreen.routeName);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+               
               ]),
             ))),
           );
