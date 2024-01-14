@@ -4,7 +4,10 @@ import 'package:date_field/date_field.dart';
 import 'package:umujyanama/common/widgets/custom_button.dart';
 import 'package:umujyanama/common/widgets/custom_textfield.dart';
 import 'package:umujyanama/constants/global_variables.dart';
+import 'package:umujyanama/constants/loader.dart';
 import 'package:umujyanama/home/services/patient_service.dart';
+import 'package:umujyanama/models/deases.dart';
+import 'package:umujyanama/services/village_service.dart';
 
 class PatientScreen extends StatefulWidget {
   const PatientScreen({super.key});
@@ -15,6 +18,9 @@ class PatientScreen extends StatefulWidget {
 
 class _PatientScreenState extends State<PatientScreen> {
   final _patientForm = GlobalKey<FormState>();
+  final VillageService villageService = VillageService();
+  List<Dease>? deases;
+
   final PatientService patientService = PatientService();
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _insuranceNameController =
@@ -30,11 +36,18 @@ class _PatientScreenState extends State<PatientScreen> {
   String? dease;
   DateTime? dateOfBirth;
   bool loading = false;
-  List<Map> deases = [
-    {"keyName": "CHILDILLNESS", "name": "Childhood illnesses"},
-    {"keyName": "MALARIA", "name": "Malaria"},
-    {"keyName": "TUBERCULOSIS", "name": "Tuberculosis"}
-  ];
+  // List<Map> deases = [
+  //   {"keyName": "CHILDILLNESS", "name": "Childhood illnesses"},
+  //   {"keyName": "MALARIA", "name": "Malaria"},
+  //   {"keyName": "TUBERCULOSIS", "name": "Tuberculosis"}
+  // ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchAllDeases();
+  }
 
   @override
   void dispose() {
@@ -45,6 +58,11 @@ class _PatientScreenState extends State<PatientScreen> {
     dease;
   }
 
+  fetchAllDeases() async {
+    deases = await villageService.fetchDeases(context: context);
+    setState(() {});
+  }
+
   void submitPatient() async {
     bool dt = await patientService.submitPatient(
         context: context,
@@ -52,7 +70,7 @@ class _PatientScreenState extends State<PatientScreen> {
         phoneNumber: phoneNumberController.toString(),
         insuranceName: _insuranceNameController.text,
         insuranceNumber: _insuranceNumberController.text,
-        sickness: dease.toString(),
+        sickness: dease!.toUpperCase().toString(),
         symptoms: _symptomsController.text,
         causes: _causesController.text,
         dateOfBirth: dateOfBirth!);
@@ -63,7 +81,9 @@ class _PatientScreenState extends State<PatientScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return deases == null
+        ? const Loader()
+        : Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -149,15 +169,15 @@ class _PatientScreenState extends State<PatientScreen> {
                       underline: Container(), //empty line
                       style: const TextStyle(
                           fontSize: 18,
-                          color: const Color.fromARGB(255, 11, 11, 11)),
+                          color:  Color.fromARGB(255, 11, 11, 11)),
                       isExpanded: true,
                       hint: const Text("Select Paldusim"),
                       value: dease,
                       icon: const Icon(Icons.keyboard_arrow_down),
-                      items: deases.map((item) {
+                      items: deases!.map((item) {
                         return DropdownMenuItem(
-                            value: item['keyName'],
-                            child: Text("${item['name']}"));
+                            value: item.name,
+                            child: Text(item.name));
                       }).toList(),
                       onChanged: (newVal) {
                         setState(() {
@@ -195,7 +215,8 @@ class _PatientScreenState extends State<PatientScreen> {
                       : CustomButton(
                           text: "Submit",
                           onTap: () {
-                            if (_patientForm.currentState!.validate() && dease!=null) {
+                            if (_patientForm.currentState!.validate() &&
+                                dease != null) {
                               submitPatient();
                               setState(() {
                                 loading = true;
