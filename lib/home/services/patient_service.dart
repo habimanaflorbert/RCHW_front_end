@@ -34,7 +34,7 @@ class PatientService {
           sickness: sickness,
           dateOfBirth:
               "${dateOfBirth.year}-${dateOfBirth.month}-${dateOfBirth.day}");
-      
+      print(sickness);
       http.Response resp = await http.post(
         Uri.parse('$uri/api/patient/'),
         body: patient.toJson(),

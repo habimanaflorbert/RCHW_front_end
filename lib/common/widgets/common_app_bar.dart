@@ -19,7 +19,7 @@ class CommonAppBar extends StatelessWidget {
                   // margin: const EdgeInsets.only(top:10),
 
                   child: const Text(
-                    "RCHW",
+                    "RHW",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

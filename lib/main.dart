@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'RCHW',
+      title: 'RHW',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           elevation: 0,
